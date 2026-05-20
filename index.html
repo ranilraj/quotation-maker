@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickEstimate - Zero-Effort PDF Estimate & Quotation Maker for Contractors</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Generate professional PDF estimates and quotations for your clients in 60 seconds. Perfect for interior designers, painters, plumbers, carpenters, and electricians. Real-time live A4 PDF preview!">
+  <meta name="keywords" content="estimate maker, invoice generator, quotation maker, contractor billing, pdf estimate, desktop quotation billing, painter estimate, carpenter billing">
+  <meta name="author" content="Antigravity Team">
+  <meta name="theme-color" content="#4f46e5">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="QuickEstimate - Professional Desktop Estimate & PDF Maker">
+  <meta property="og:description" content="Generate and send stunning PDF quotations in 60 seconds. Boost your winning rate today!">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/logo-192.png">
+  <link rel="apple-touch-icon" href="assets/logo-192.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Laptop Desktop Application Shell -->
+  <div class="app-layout">
+    
+    <!-- Left Navigation Sidebar -->
+    <aside class="app-sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo">
+          <i class="fa-solid fa-file-invoice-dollar logo-icon"></i>
+        </div>
+        <div class="brand-text">
+          <h1 class="logo-title">Quick<span>Estimate</span></h1>
+          <span class="logo-subtitle">Laptop Pro Dashboard</span>
+        </div>
+      </div>
+
+      <!-- Business profile quick status in sidebar -->
+      <div class="sidebar-profile-card">
+        <div class="profile-avatar" id="sidebarLogoContainer">
+          <i class="fa-solid fa-building"></i>
+          <img id="sidebarLogoImg" src="" alt="Biz Logo" class="hidden">
+        </div>
+        <div class="profile-info">
+          <h4 id="sidebarBizName">Royal Decorators</h4>
+          <span id="sidebarOwner">Suresh Gowda</span>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu Navigation -->
+      <nav class="sidebar-nav">
+        <button id="sideTabDashboard" class="sidebar-nav-btn active">
+          <i class="fa-solid fa-chart-line"></i> <span>Dashboard / History</span>
+        </button>
+        <button id="sideTabCreate" class="sidebar-nav-btn">
+          <i class="fa-solid fa-file-invoice-dollar"></i> <span>Create Estimate</span>
+        </button>
+        <button id="sideTabBusiness" class="sidebar-nav-btn">
+          <i class="fa-solid fa-briefcase"></i> <span>My Business Settings</span>
+        </button>
+        <button id="sideTabPremium" class="sidebar-nav-btn highlight-premium">
+          <i class="fa-solid fa-crown"></i> <span>Upgrade to Pro Plan</span>
+        </button>
+      </nav>
+
+      <!-- Dynamic Sidebar Ad Slot (Hidden for Pro Accounts) -->
+      <div id="sidebarAdSlot" class="sidebar-ad-card">
+        <span class="ad-tag">ADVERTISEMENT</span>
+        <!-- Google AdSense Container -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXX"
+             data-ad-slot="YYYYYYYYYY"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <div class="ad-mock-box">
+          <i class="fa-solid fa-rectangle-ad"></i>
+          <p>Ad Banner (Skyscraper)</p>
+          <span class="ad-sub">Go Pro to Remove Ads</span>
+        </div>
+      </div>
+
+      <!-- Sidebar Footer User Card -->
+      <div class="sidebar-footer">
+        <div class="premium-status-indicator" id="sidebarPremiumBadge">
+          <i class="fa-solid fa-shield-halved"></i> Free Account (Upgrade)
+        </div>
+        <span class="version-lbl">v1.2.0 Desktop Pro</span>
+      </div>
+    </aside>
+
+    <!-- Right Side Core Workspace -->
+    <main class="app-workspace">
+      
+      <!-- Workspace Header -->
+      <header class="workspace-header">
+        <div class="header-breadcrumbs">
+          <span class="breadcrumb-parent">Console</span>
+          <i class="fa-solid fa-chevron-right breadcrumb-sep"></i>
+          <span class="breadcrumb-current" id="headerBreadcrumb">Dashboard</span>
+        </div>
+        <div class="header-global-actions">
+          <button id="globalCreateQuoteBtn" class="btn btn-primary btn-sm">
+            <i class="fa-solid fa-plus"></i> New Estimate
+          </button>
+        </div>
+      </header>
+
+      <!-- VIEW 1: DASHBOARD / CONTROL PANEL -->
+      <section id="viewDashboard" class="workspace-view active-view">
+        
+        <!-- Large Metrics Strip Grid -->
+        <div class="metrics-grid">
+          
+          <div class="metric-card won">
+            <div class="metric-body">
+              <div class="metric-info">
+                <span class="metric-label">Total Estimates Won</span>
+                <h2 id="metricWon" class="metric-value">₹0</h2>
+              </div>
+              <div class="metric-icon">
+                <i class="fa-solid fa-circle-check"></i>
+              </div>
+            </div>
+            <div class="metric-footer">
+              <span class="footer-trend text-success"><i class="fa-solid fa-arrow-trend-up"></i> High Win Rate</span>
+            </div>
+          </div>
+
+          <div class="metric-card sent">
+            <div class="metric-body">
+              <div class="metric-info">
+                <span class="metric-label">Quotes Sent (Pending Approval)</span>
+                <h2 id="metricSent" class="metric-value">₹0</h2>
+              </div>
+              <div class="metric-icon">
+                <i class="fa-solid fa-paper-plane"></i>
+              </div>
+            </div>
+            <div class="metric-footer">
+              <span class="footer-trend text-primary">Needs Client Follow-up</span>
+            </div>
+          </div>
+
+          <div class="metric-card draft">
+            <div class="metric-body">
+              <div class="metric-info">
+                <span class="metric-label">Draft Pipeline Value</span>
+                <h2 id="metricDraft" class="metric-value">₹0</h2>
+              </div>
+              <div class="metric-icon">
+                <i class="fa-solid fa-folder-open"></i>
+              </div>
+            </div>
+            <div class="metric-footer">
+              <span class="footer-trend text-muted">Awaiting final rates</span>
+            </div>
+          </div>
+
+          <div class="metric-card counts">
+            <div class="metric-body">
+              <div class="metric-info">
+                <span class="metric-label">Win/Loss Ratio Summary</span>
+                <h2 id="metricCount" class="metric-value">0</h2>
+              </div>
+              <div class="metric-icon">
+                <i class="fa-solid fa-chart-pie"></i>
+              </div>
+            </div>
+            <div class="metric-footer">
+              <span class="footer-trend text-info" id="metricSuccessPill">0% Conversion</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Filter, Sort, and Search controls (Wide Desktop layout) -->
+        <div class="controls-panel">
+          <div class="search-field">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="searchQuoteInput" placeholder="Search clients, addresses, or trade presets...">
+          </div>
+          <div class="filter-controls">
+            <select id="statusFilter" class="form-select-sm">
+              <option value="all">📁 All Statuses</option>
+              <option value="draft">📁 Draft (Unsent)</option>
+              <option value="sent">✉️ Sent to Client</option>
+              <option value="accepted">✅ Accepted / Won</option>
+              <option value="declined">❌ Declined / Lost</option>
+            </select>
+            <button id="clearAllHistoryBtn" class="btn btn-outline-danger btn-sm">
+              <i class="fa-solid fa-trash-can"></i> Clear Database
+            </button>
+          </div>
+        </div>
+
+        <!-- List Section Header -->
+        <div class="table-title-row">
+          <h3 class="panel-section-title">All Historical Quotations</h3>
+        </div>
+
+        <!-- Wide Table representation (Prinstine Desktop Datagrid) -->
+        <div class="history-table-container">
+          <table class="history-datatable" id="historyTable">
+            <thead>
+              <tr>
+                <th width="8%">Quote ID</th>
+                <th width="22%">Client Name</th>
+                <th width="20%">Trade Scope</th>
+                <th width="15%">Date Created</th>
+                <th width="12%" style="text-align: right;">Total Amount</th>
+                <th width="10%" style="text-align: center;">Status</th>
+                <th width="13%" style="text-align: center;">Quick Actions</th>
+              </tr>
+            </thead>
+            <tbody id="historyTableBody">
+              <!-- Dynamically populated rows inside app.js -->
+            </tbody>
+          </table>
+
+          <!-- Datagrid Empty State -->
+          <div class="table-empty-state" id="emptyStateView">
+            <i class="fa-regular fa-folder-open empty-icon"></i>
+            <h4>No estimates generated yet</h4>
+            <p>Select your client trade preset, create an estimate in 60 seconds, and win high-value contracts!</p>
+            <button class="btn btn-primary btn-sm create-first-btn" style="margin-top: 14px;">
+              <i class="fa-solid fa-plus"></i> Create Your First Estimate
+            </button>
+          </div>
+        </div>
+
+        <!-- Dynamic Dashboard Bottom Leaderboard Ad Slot (Hidden for Pro Accounts) -->
+        <div id="dashboardAdSlot" class="dashboard-ad-banner">
+          <span class="ad-tag">ADVERTISEMENT</span>
+          <!-- Google AdSense Container -->
+          <ins class="adsbygoogle"
+               style="display:inline-block;width:728px;height:90"
+               data-ad-client="ca-pub-XXXXXXXXXXXX"
+               data-ad-slot="ZZZZZZZZZZ"></ins>
+          <div class="ad-mock-banner">
+            <i class="fa-solid fa-rectangle-ad"></i>
+            <span>Google AdSense Leaderboard Space (728x90) — Hides when Pro Plan is Activated</span>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- VIEW 2: SPLIT VIEW BUILDER (CREATE / EDIT ESTIMATE) -->
+      <section id="viewCreateEstimate" class="workspace-view">
+        
+        <div class="split-pane-layout">
+          
+          <!-- LEFT SIDE: 60% Interactive Builder Form -->
+          <div class="builder-form-pane">
+            
+            <div class="pane-header-actions">
+              <button id="btnFormBack" class="back-btn-desktop">
+                <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+              </button>
+              <span class="draft-indicator" id="draftSaveState"><i class="fa-solid fa-circle-check"></i> Auto-saved locally</span>
+            </div>
+
+            <form id="estimateForm" autocomplete="off" onsubmit="event.preventDefault();">
+              
+              <!-- SECTION 1: Client Metadata -->
+              <div class="builder-section">
+                <div class="builder-section-title">
+                  <i class="fa-solid fa-user-tie"></i> Client Information
+                </div>
+                <div class="form-grid">
+                  <div class="form-group col-12">
+                    <label for="clientName">Client Name <span class="required">*</span></label>
+                    <input type="text" id="clientName" required placeholder="e.g. Ramesh Kumar">
+                  </div>
+                  <div class="form-group col-6">
+                    <label for="clientPhone">WhatsApp Number <span class="required">*</span></label>
+                    <div class="phone-input-wrapper">
+                      <span class="country-code">+91</span>
+                      <input type="tel" id="clientPhone" required placeholder="9876543210" pattern="[0-9]{10}">
+                    </div>
+                  </div>
+                  <div class="form-group col-6">
+                    <label for="clientEmail">Email Address (Optional)</label>
+                    <input type="email" id="clientEmail" placeholder="e.g. ramesh@example.com">
+                  </div>
+                  <div class="form-group col-12">
+                    <label for="clientAddress">Project / Site Address Location</label>
+                    <input type="text" id="clientAddress" placeholder="e.g. Flat 402, Green Glen Layout, Bengaluru">
+                  </div>
+                </div>
+              </div>
+
+              <!-- SECTION 2: Itemizer Sheet & Presets -->
+              <div class="builder-section">
+                <div class="builder-section-header">
+                  <div class="builder-section-title">
+                    <i class="fa-solid fa-screwdriver-wrench"></i> Scope of Work Line Items
+                  </div>
+                  <div class="trade-dropdown-box">
+                    <select id="tradePreset" class="form-select-sm header-select">
+                      <option value="">-- Quick Load Trade Presets --</option>
+                      <option value="interior">🛋️ Interior Designing</option>
+                      <option value="painting">🎨 Painting & Polishing</option>
+                      <option value="carpentry">🪚 Carpentry & Woodwork</option>
+                      <option value="plumbing">🚰 Plumbing Services</option>
+                      <option value="electrical">⚡ Electrical Installation</option>
+                      <option value="custom">✨ Blank Custom Worksheet</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Custom Table Sheets -->
+                <div class="items-table-container">
+                  <table id="itemsTable" class="items-table">
+                    <thead>
+                      <tr>
+                        <th width="5%">#</th>
+                        <th width="45%">Description of Work / item <span class="required">*</span></th>
+                        <th width="15%">Rate (₹) <span class="required">*</span></th>
+                        <th width="12%">Qty <span class="required">*</span></th>
+                        <th width="13%">Unit</th>
+                        <th width="15%">Total (₹)</th>
+                        <th width="5%"></th>
+                      </tr>
+                    </thead>
+                    <tbody id="itemsTableBody">
+                      <!-- Dynamically injected rows -->
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Table helper actions -->
+                <div class="table-actions-container">
+                  <button type="button" id="addNewItemRowBtn" class="btn btn-outline-primary btn-sm">
+                    <i class="fa-solid fa-plus"></i> Add Line Row
+                  </button>
+                  <div class="quick-preset-chips" id="quickPresetChipsContainer">
+                    <!-- Helper Preset Chips inserted by JavaScript -->
+                  </div>
+                </div>
+
+                <!-- Live Mathematical calculations -->
+                <div class="totals-section">
+                  <div class="totals-row">
+                    <span>Subtotal:</span>
+                    <span id="labelSubtotal">₹0.00</span>
+                  </div>
+                  
+                  <div class="totals-row interactive-row">
+                    <div class="flex-align">
+                      <label class="switch">
+                        <input type="checkbox" id="toggleDiscount">
+                        <span class="slider round"></span>
+                      </label>
+                      <span>Apply Discount (%)</span>
+                    </div>
+                    <input type="number" id="inputDiscountVal" class="form-input-inline" min="0" max="100" value="0" disabled>
+                  </div>
+                  <div class="totals-row text-danger hidden" id="discountValRow">
+                    <span>Discount:</span>
+                    <span id="labelDiscount">-₹0.00</span>
+                  </div>
+
+                  <div class="totals-row interactive-row">
+                    <div class="flex-align">
+                      <label class="switch">
+                        <input type="checkbox" id="toggleTax">
+                        <span class="slider round"></span>
+                      </label>
+                      <span>Apply GST/Tax (%)</span>
+                    </div>
+                    <input type="number" id="inputTaxVal" class="form-input-inline" min="0" max="100" value="18" disabled>
+                  </div>
+                  <div class="totals-row text-success hidden" id="taxValRow">
+                    <span id="labelTaxName">GST (18%):</span>
+                    <span id="labelTax">₹0.00</span>
+                  </div>
+
+                  <div class="totals-row grand-total-row">
+                    <span>Grand Total:</span>
+                    <span id="labelGrandTotal">₹0.00</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SECTION 3: Terms & Interactive signature pad -->
+              <div class="builder-section">
+                <div class="builder-section-title">
+                  <i class="fa-solid fa-pen-nib"></i> Professional Additions
+                </div>
+                <div class="form-grid">
+                  <div class="form-group col-12">
+                    <label for="paymentTerms">Payment Terms & Project Scope Remarks</label>
+                    <textarea id="paymentTerms" rows="4" placeholder="Terms and project conditions..."></textarea>
+                  </div>
+                  
+                  <div class="form-group col-6">
+                    <label for="pdfThemeSelect">A4 Quotation Theme</label>
+                    <select id="pdfThemeSelect" class="form-select">
+                      <option value="indigo">✨ Premium Modern Indigo</option>
+                      <option value="slate">💼 Professional Slate Grey</option>
+                      <option value="emerald">🌿 Fresh Emerald Minimalist</option>
+                      <option value="sunset">🌇 Creative Sunset Amber</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-6">
+                    <label for="estimateStatus">Estimate Lifecycle Status</label>
+                    <select id="estimateStatus" class="form-select">
+                      <option value="draft">📁 Draft (Unsent)</option>
+                      <option value="sent" selected>✉️ Sent to Client</option>
+                      <option value="accepted">✅ Accepted / Won</option>
+                      <option value="declined">❌ Declined / Lost</option>
+                    </select>
+                  </div>
+
+                  <!-- Canvas signature pad -->
+                  <div class="form-group col-12">
+                    <div class="sig-pad-header">
+                      <label>Digital Authorized Signature <span class="badge badge-success">Mouse & Drawing Pad Friendly</span></label>
+                      <button type="button" id="clearSigBtn" class="btn btn-outline-danger btn-xs">Clear Signature</button>
+                    </div>
+                    <div class="signature-canvas-container">
+                      <canvas id="sigCanvas"></canvas>
+                      <div class="sig-placeholder" id="sigPlaceholder">
+                        <i class="fa-solid fa-signature"></i> Draw your digital signature here
+                      </div>
+                    </div>
+                    <span class="helper-text">This will be captured and embedded beautifully at the bottom of the PDF.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sticky form control bar inside building view -->
+              <div class="form-actions-desktop">
+                <button type="button" id="btnSaveDraft" class="btn btn-secondary">
+                  <i class="fa-solid fa-floppy-disk"></i> Save to Drafts
+                </button>
+                <button type="button" id="btnDownloadPDF" class="btn btn-primary">
+                  <i class="fa-solid fa-file-pdf"></i> Generate PDF
+                </button>
+                <button type="button" id="btnShareWhatsApp" class="btn btn-success">
+                  <i class="fa-brands fa-whatsapp"></i> Share on WhatsApp
+                </button>
+              </div>
+
+            </form>
+          </div>
+
+          <!-- RIGHT SIDE: 40% Sticky Real-time PDF Preview Canvas -->
+          <div class="live-preview-pane">
+            <div class="sticky-preview-container">
+              
+              <!-- PDF Preview Header Controls -->
+              <div class="preview-actions-bar">
+                <h4 class="bar-title"><i class="fa-solid fa-eye"></i> Real-time Live A4 Preview</h4>
+                <div class="preview-theme-selector">
+                  <button class="theme-dot indigo active" data-theme="indigo" title="Indigo"></button>
+                  <button class="theme-dot slate" data-theme="slate" title="Slate Grey"></button>
+                  <button class="theme-dot emerald" data-theme="emerald" title="Emerald"></button>
+                  <button class="theme-dot sunset" data-theme="sunset" title="Sunset"></button>
+                </div>
+              </div>
+
+              <!-- Paper Target Area -->
+              <div class="paper-layout-shadow">
+                <div id="pdfPrintTarget" class="pdf-print-target theme-indigo">
+                  <!-- Dynamically rendered live by JavaScript inputs -->
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- VIEW 3: MY BUSINESS & LOGO CONFIGURATIONS -->
+      <section id="viewBusiness" class="workspace-view">
+        
+        <form id="settingsForm" autocomplete="off" onsubmit="event.preventDefault();">
+          
+          <div class="settings-grid">
+            
+            <!-- Company Profile Card -->
+            <div class="settings-card col-8">
+              <div class="builder-section-title" style="margin-bottom: 20px;">
+                <i class="fa-solid fa-building"></i> Company Information
+              </div>
+
+              <div class="form-grid">
+                
+                <!-- Logo Uploader with premium live preview inside card -->
+                <div class="form-group col-12 flex-align-center logo-uploader-group">
+                  <div class="logo-preview-box" id="logoPreviewBox">
+                    <i class="fa-solid fa-image logo-placeholder-icon"></i>
+                    <img id="logoImg" src="" alt="Company Logo" class="hidden">
+                  </div>
+                  <div class="logo-upload-controls">
+                    <label for="logoFileInput" class="btn btn-outline-primary btn-sm btn-upload">
+                      <i class="fa-solid fa-cloud-arrow-up"></i> Upload Company Logo
+                    </label>
+                    <input type="file" id="logoFileInput" accept="image/*" class="hidden">
+                    <button type="button" id="removeLogoBtn" class="btn btn-outline-danger btn-sm hidden">Remove</button>
+                    <span class="helper-text">PNG/JPG. Highly recommended for a premium client look!</span>
+                  </div>
+                </div>
+
+                <div class="form-group col-12">
+                  <label for="bizName">Business / Company Name <span class="required">*</span></label>
+                  <input type="text" id="bizName" required placeholder="e.g. Royal Decorators & Painters">
+                </div>
+                <div class="form-group col-6">
+                  <label for="bizOwner">Authorized Owner / Contact Person Name</label>
+                  <input type="text" id="bizOwner" placeholder="e.g. Suresh Gowda">
+                </div>
+                <div class="form-group col-6">
+                  <label for="bizPhone">Business Phone / Mobile <span class="required">*</span></label>
+                  <input type="tel" id="bizPhone" required placeholder="9876543210">
+                </div>
+                <div class="form-group col-6">
+                  <label for="bizEmail">Business Email</label>
+                  <input type="email" id="bizEmail" placeholder="e.g. contact@royaldecors.com">
+                </div>
+                <div class="form-group col-6">
+                  <label for="bizGST">GSTIN / Tax ID No (Optional)</label>
+                  <input type="text" id="bizGST" placeholder="e.g. 29AAAAA0000A1Z5">
+                </div>
+                <div class="form-group col-12">
+                  <label for="bizAddress">Corporate Address Location</label>
+                  <textarea id="bizAddress" rows="3" placeholder="e.g. HSR Layout, Sector 3, Bengaluru, Karnataka"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Profile Sidebar card with defaults & monetization keys -->
+            <div class="settings-card col-4">
+              <div class="builder-section-title" style="margin-bottom: 20px;">
+                <i class="fa-solid fa-sliders"></i> Default Configurations
+              </div>
+
+              <div class="form-group" style="margin-bottom: 16px;">
+                <label for="defaultCurrency">Currency Symbol</label>
+                <select id="defaultCurrency" class="form-select">
+                  <option value="₹">₹ (INR - Rupees)</option>
+                  <option value="$">$ (USD - Dollars)</option>
+                  <option value="AED">AED (Dirhams)</option>
+                  <option value="£">£ (GBP - Pounds)</option>
+                </select>
+              </div>
+
+              <div class="form-group" style="margin-bottom: 16px;">
+                <label for="defaultTaxVal">Default GST/Tax (%)</label>
+                <input type="number" id="defaultTaxVal" min="0" max="100" value="18">
+              </div>
+
+              <div class="form-group" style="margin-bottom: 24px;">
+                <label for="defaultTerms">Default Terms & Agreement Validity</label>
+                <textarea id="defaultTerms" rows="5" placeholder="Terms and project conditions..."></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block">
+                <i class="fa-solid fa-circle-check"></i> Save Business Settings
+              </button>
+            </div>
+
+          </div>
+
+        </form>
+
+        <!-- Developer sandbox parameters inside Business Profile view -->
+        <div class="dev-card">
+          <div class="builder-section-title" style="margin-bottom: 16px; color: var(--secondary);">
+            <i class="fa-solid fa-code"></i> Developer Sandbox Settings
+          </div>
+          <p class="helper-text" style="margin-bottom: 20px;">Use these parameters to plug in live checkouts or simulate premium gateways.</p>
+          <div class="form-grid">
+            <div class="form-group col-6">
+              <label for="razorpayKey">Razorpay Key ID (Mock/Production)</label>
+              <input type="text" id="razorpayKey" placeholder="rzp_test_xxxxxxxxx">
+            </div>
+            <div class="form-group col-6">
+              <label for="monetizationMode">Checkout Integration Flow</label>
+              <select id="monetizationMode" class="form-select">
+                <option value="mock">Simulated Checkout Dialog (Confirm and Trial Confetti)</option>
+                <option value="live">Live Checkout Window (Razorpay Production)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- VIEW 4: PREMIUM SUBSCRIPTIONS CARD VIEW -->
+      <section id="viewPremium" class="workspace-view">
+        
+        <div class="premium-desktop-layout">
+          <div class="premium-header-billboard">
+            <div class="crown-shield-desktop"><i class="fa-solid fa-crown"></i></div>
+            <h2>Unlock QuickEstimate Pro</h2>
+            <p>Generate unlimited high-end PDF quotations, remove watermarks, and close ₹50,000 contracts with zero effort.</p>
+          </div>
+
+          <!-- Billing Period toggle -->
+          <div class="billing-toggle-desktop">
+            <span class="active-billing" id="billingMonthlyLabel">Monthly</span>
+            <label class="switch billing-switch">
+              <input type="checkbox" id="billingPeriodToggle">
+              <span class="slider round"></span>
+            </label>
+            <span id="billingYearlyLabel">Yearly <span class="discount-pill">Save 45%</span></span>
+          </div>
+
+          <!-- Pricing Table Layout -->
+          <div class="pricing-desktop-table">
+            
+            <!-- Standard Free plan -->
+            <div class="pricing-desktop-card">
+              <h3 class="plan-title">Contractor Free</h3>
+              <div class="price-strip">
+                <span class="price-amt">₹0</span>
+                <span class="price-per">/ forever</span>
+              </div>
+              <p class="plan-desc">For individual tradespeople starting out.</p>
+              <ul class="plan-features">
+                <li><i class="fa-solid fa-check text-success"></i> Up to 3 PDF Estimates</li>
+                <li><i class="fa-solid fa-xmark text-danger"></i> Watermarks on PDFs</li>
+                <li><i class="fa-solid fa-xmark text-danger"></i> No custom Logo upload</li>
+                <li><i class="fa-solid fa-xmark text-danger"></i> Standard Theme style only</li>
+                <li><i class="fa-solid fa-check text-success"></i> Standard Terms & Validity</li>
+              </ul>
+              <button class="btn btn-secondary btn-block" disabled>Active Plan</button>
+            </div>
+
+            <!-- Premium Plan (Best value) -->
+            <div class="pricing-desktop-card pro-featured">
+              <div class="featured-badge">BEST VALUE FOR CONTRACTORS</div>
+              <h3 class="plan-title">Contractor Pro</h3>
+              <div class="price-strip">
+                <span class="price-currency" id="pricingCurrency">₹</span>
+                <span class="price-amt" id="pricingValue">299</span>
+                <span class="price-per" id="pricingPeriod">/ month</span>
+              </div>
+              <p class="plan-desc">For professional designers, painters, and carpenters.</p>
+              <ul class="plan-features">
+                <li><i class="fa-solid fa-check text-success"></i> <strong>Unlimited</strong> PDF Quotations</li>
+                <li><i class="fa-solid fa-check text-success"></i> <strong>No Watermarks</strong> on customer prints</li>
+                <li><i class="fa-solid fa-check text-success"></i> Custom **Business Logo** upload</li>
+                <li><i class="fa-solid fa-check text-success"></i> **Interactive Signature** embedded on A4</li>
+                <li><i class="fa-solid fa-check text-success"></i> 4 Gorgeous dynamic PDF layout styles</li>
+                <li><i class="fa-solid fa-check text-success"></i> Direct 1-click sharing on WhatsApp</li>
+                <li><i class="fa-solid fa-check text-success"></i> Complete **Offline PWA Capability** at sites</li>
+              </ul>
+              <button id="activatePremiumBtn" class="btn btn-premium-activate btn-block">
+                Start Your 7-Day Free Trial
+              </button>
+              <div class="secure-footer-pay">
+                <i class="fa-solid fa-shield-halved"></i> Secured with SSL & Razorpay. Cancel anytime.
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Wide Testimonial Grid -->
+          <div class="testimonials-desktop-grid">
+            <div class="testimonial-desktop-card">
+              <div class="stars-strip"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <p>"I compiled a detailed woodwork quote on my laptop sitting inside my client's half-finished kitchen. They were shocked by the professional letterhead PDF and agreed on the ₹1,80,000 budget on the spot."</p>
+              <strong>— Rajesh Kumar, Modular Woodwork Contractor</strong>
+            </div>
+            <div class="testimonial-desktop-card">
+              <div class="stars-strip"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <p>"Using Word or Excel on the go was a nightmare. This desktop quotation generator is so simple that my estimators generate quotes in 2 minutes and send them directly to clients. Highly recommended!"</p>
+              <strong>— Suresh Gowda, Royal Decorators</strong>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Notification Toast Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- External Library CDNs -->
+  <!-- html2pdf.js for client-side HTML-to-PDF conversion -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <!-- canvas-confetti for celebrating premium unlocks or won deals -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Main Application JavaScript -->
+  <script src="app.js"></script>
+</body>
+</html>
